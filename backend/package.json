@@ -1,5 +1,8 @@
 {
-  "dependencies": {
-    "ytdl-core": "^4.11.5"
-  }
+"dependencies": {
+  "ytdl-core": "^4.11.5",
+  "axios": "^1.1.0",
+  "dotenv": "^17.2.2",
+  "express": "^5.1.0"
+}
 }
