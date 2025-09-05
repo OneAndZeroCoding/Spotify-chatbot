@@ -1,1 +1,22 @@
+# Common files
 
+# OS / Editor files
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+
+# Environment variables
+.env
+.env.*  
+
+# Backend 
+
+# Node modules
+backend/node_modules/
+
+# Build outputs
+backend/dist/
+backend/build/
+backend/coverage/
