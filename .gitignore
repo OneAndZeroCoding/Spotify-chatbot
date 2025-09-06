@@ -15,6 +15,7 @@ Thumbs.db
 
 # Node modules
 backend/node_modules/
+backend/.env
 
 # Build outputs
 backend/dist/
