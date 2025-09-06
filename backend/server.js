@@ -1,9 +1,11 @@
+console.log("Server started")
 require('dotenv').config(); // Load .env first
 const express = require('express');
 const session = require('express-session'); // For storing user tokens
-const spotifyRoutes = require('./spotify');
+const spotifyRoutes = require('./routes/spotify');
 
 const app = express();
+app.use(express.json());
 
 // Use sessions to store user access token
 app.use(session({
