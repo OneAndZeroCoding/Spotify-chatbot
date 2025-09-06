@@ -32,4 +32,40 @@ async function addTracksToPlaylist(playlistId, trackIds, userAccessToken) {
   return res.data;
 }
 
-module.exports = { createPlaylist, searchTrack, addTracksToPlaylist };
+// Get all playlists in the account
+async function getUserPlaylists(userAccessToken) {
+  let playlists = [];
+  let limit = 50;
+  let offset = 0;
+  let total = 0;
+
+  do {
+    const res = await axios.get('https://api.spotify.com/v1/me/playlists', {
+      headers: { Authorization: `Bearer ${userAccessToken}` },
+      params: {
+        limit,
+        offset,
+        include_external: 'playlist' // include followed playlists
+      }
+    });
+
+    playlists = playlists.concat(
+      res.data.items.map(p => ({
+        id: p.id,
+        name: p.name,
+        tracksTotal: p.tracks.total,
+        ownerId: p.owner.id,
+        collaborative: p.collaborative,
+        public: p.public
+      }))
+    );
+
+    total = res.data.total;
+    offset += limit;
+  } while (offset < total);
+
+  return playlists;
+}
+
+
+module.exports = { createPlaylist, searchTrack, addTracksToPlaylist, getUserPlaylists };
