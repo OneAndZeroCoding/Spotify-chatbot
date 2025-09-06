@@ -1,6 +1,10 @@
+require("dotenv").config()
 const axios = require('axios');
-
 let accessToken = null;
+
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+const redirectUri = process.env.SPOTIFY_REDIRECT_URI;
 
 // Get a new Spotify access token
 async function getAccessToken() {
