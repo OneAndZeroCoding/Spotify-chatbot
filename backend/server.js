@@ -3,7 +3,7 @@ require('dotenv').config(); // Load .env first
 const express = require('express');
 const session = require('express-session'); // For storing user tokens
 const spotifyRoutes = require('./routes/spotify');
-
+const convertRoutes = require('./routes/convert');
 const app = express();
 app.use(express.json());
 
@@ -16,6 +16,8 @@ app.use(session({
 
 // Mount Spotify routes
 app.use('/spotify', spotifyRoutes);
+app.use('/convert', convertRoutes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
