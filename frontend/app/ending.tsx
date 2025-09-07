@@ -39,15 +39,15 @@ export default function EndingScreen() {
     ).start();
   }, [animation]);
 
-  // Interpolated colors
+  // Interpolated colors (Spotify green theme)
   const color1 = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#B22222', '#FF4500'], // deep red → orange-red
+    outputRange: ['#1DB954', '#1ed760'], // bright greens
   });
 
   const color2 = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#8B0000', '#B22222'], // dark red → medium red
+    outputRange: ['#0a0a0a', '#1a1a1a'], // dark fade
   });
 
   return (
@@ -56,7 +56,7 @@ export default function EndingScreen() {
       <View style={styles.topHalf}>
         {/* Header */}
         <View style={styles.header}>
-          {/* Invisible placeholder (same size as icon) */}
+          {/* Invisible placeholder */}
           <View style={styles.iconPlaceholder} />
 
           {/* Centered Title */}
@@ -64,26 +64,26 @@ export default function EndingScreen() {
 
           {/* Right User Icon */}
           <TouchableOpacity style={styles.userIcon} onPress={handleGoBack}>
-            <Ionicons name="person-circle-outline" size={26} color="#000" />
+            <Ionicons name="person-circle-outline" size={26} color="#fff" />
           </TouchableOpacity>
         </View>
 
         {/* Success Messages */}
         <View style={styles.mainContent}>
-          <Text style={styles.successMessage}>Playlist Created!!!</Text>
-          <Text style={styles.successMessage}>Check your Spotify.</Text>
+          <Text style={styles.successMessage}>✅ Playlist Created!</Text>
+          <Text style={styles.subMessage}>Check your Spotify now 🎶</Text>
         </View>
       </View>
 
-      {/* Bottom Half (Animated Diagonal Gradient) */}
+      {/* Bottom Half (Animated Gradient) */}
       <AnimatedLinearGradient
-        colors={[color1 as any, color2 as any]} // cast for TS
+        colors={[color1 as any, color2 as any]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.bottomHalf}
       >
         <Text style={styles.footerText}>
-          Thanks for using our{'\n'}product.
+          Thanks for using JinxBot{'\n'}Your AI playlist companion
         </Text>
       </AnimatedLinearGradient>
     </SafeAreaView>
@@ -91,7 +91,7 @@ export default function EndingScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFFFFF' },
+  container: { flex: 1, backgroundColor: '#0a0a0a' },
   topHalf: { flex: 1, padding: 20 },
   bottomHalf: {
     flex: 1,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -3 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 8,
   },
@@ -114,44 +114,48 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#000000',
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#ffffff',
     textAlign: 'center',
     flex: 1,
   },
   iconPlaceholder: {
-    width: 35, // same as userIcon
+    width: 35,
     height: 35,
-    opacity: 0, // invisible but keeps spacing
+    opacity: 0,
   },
   userIcon: {
     width: 35,
     height: 35,
     borderRadius: 17.5,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#1DB954',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#1DB954',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 6,
   },
-  userIconText: { fontSize: 18 },
   mainContent: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   successMessage: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#8B4513',
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#1DB954',
     textAlign: 'center',
     marginBottom: 10,
   },
-  footerText: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#FFFFFF',
+  subMessage: {
+    fontSize: 16,
+    color: '#a0a0a0',
     textAlign: 'center',
-    lineHeight: 28,
+  },
+  footerText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#ffffff',
+    textAlign: 'center',
+    lineHeight: 26,
   },
 });
