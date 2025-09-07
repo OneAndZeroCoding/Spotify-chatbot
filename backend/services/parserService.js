@@ -6,21 +6,19 @@ function cleanTitle(title) {
 
   let t = title;
 
+  //Replacment of titles
   t = t.replace(/\s*\([^)]*\)/g, '').replace(/\s*\[[^\]]*\]/g, '');
-
   t = t.replace(
     /\b(official|officially|official video|official music video|music video|audio|lyric|lyrics|lyric video|hd|hq|live|remix|version|explicit|video clip|video)\b/gi,
     ''
   );
-
   t = t.replace(/\b(ft\.?|feat\.?|featuring)\b/gi, 'feat');
   t = t.replace(/[|–—:•·]/g, ' - ');
   t = t.replace(/\s*-\s*/g, ' - ');
-
   t = t.replace(/\s+/g, ' ').trim();
-
   t = t.replace(/^[\-\:\s]+|[\-\:\s]+$/g, '').trim();
 
+  // Checking for title parts
   const parts = t.split(' - ').map(p => p.trim()).filter(Boolean);
   if (parts.length >= 2) {
     t = `${parts[0]} - ${parts[1]}`;

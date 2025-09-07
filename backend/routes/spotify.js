@@ -3,6 +3,8 @@ const router = express.Router();
 const axios = require('axios');
 require('dotenv').config();
 
+
+// Gathering functions
 const {
   createPlaylist,
   searchTrack,
@@ -10,11 +12,14 @@ const {
   getUserPlaylists
 } = require('../services/spotifyService');
 
+
+//Environment variables
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 const redirectUri = process.env.SPOTIFY_REDIRECT_URI;
 
-// 1️⃣ Login route → redirect user to Spotify auth
+
+// Login route → redirect user to Spotify auth
 router.get('/login', (req, res) => {
   const scope = 'playlist-modify-private playlist-modify-public playlist-read-private playlist-read-collaborative';
   const authUrl =
@@ -27,7 +32,7 @@ router.get('/login', (req, res) => {
 });
 
 
-//Logout route -> clearing the current token session
+// Logout route -> clearing the current token session
 router.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.send('Session cleared. Please log in again.');
@@ -35,7 +40,7 @@ router.get('/logout', (req, res) => {
 });
 
 
-// 2️⃣ Callback route → Spotify sends authorization code
+// Callback route → Spotify sends authorization code
 router.get('/callback', async (req, res) => {
   const code = req.query.code || null;
 
@@ -69,10 +74,9 @@ router.get('/callback', async (req, res) => {
     req.session.userAccessToken = access_token;
     req.session.refreshToken = refresh_token;
     req.session.userId = userProfile.data.id;
-
     console.log("Saved session:", req.session);
 
-    res.send("Login successful. You can now hit the /create-playlist endpoint.");
+    res.send("Login successful.");
   } catch (err) {
     console.error("Callback error:", err.response?.data || err.message);
     res.status(500).json({ error: "Spotify authentication failed" });
@@ -80,10 +84,10 @@ router.get('/callback', async (req, res) => {
 });
 
 
-// 3️⃣ Create playlist endpoint
+// Create playlist endpoint
 router.post('/create-playlist', async (req, res) => {
-  console.log("Session:", req.session); // 👈 check if userAccessToken + userId exist
-  console.log("Body:", req.body);
+  console.log("\nSession:", req.session); 
+  console.log("\nBody:", req.body);
   const { name } = req.body;
   try {
     const playlist = await createPlaylist(
@@ -99,7 +103,7 @@ router.post('/create-playlist', async (req, res) => {
 });
 
 
-// 5️⃣ Search track endpoint (multiple inputs)
+// Search track endpoint (multiple inputs)
 router.post("/search-tracks", async (req, res) => {
   const { queries } = req.body; // array of song titles
   const accessToken = req.session.userAccessToken;
@@ -109,7 +113,7 @@ router.post("/search-tracks", async (req, res) => {
   }
 
   if (!Array.isArray(queries) || queries.length === 0) {
-    return res.status(400).json({ error: "queries must be a non-empty array" });
+    return res.status(400).json({ error: "No titles recieved" });
   }
 
   try {
@@ -156,7 +160,7 @@ router.get('/my-playlists', async (req, res) => {
 
 
 
-// 4️⃣ Add songs to playlist endpoint
+// Add songs to playlist endpoint
 router.post('/add-songs-to-playlist', async (req, res) => {
   const { playlistId, trackIds } = req.body;
   try {

@@ -1,7 +1,11 @@
+// Getting the required stuff
+
 const express = require('express');
 const router = express.Router();
 const { parseYoutubePlaylist } = require('../services/parserService');
 const { searchTrack, createPlaylist, addTracksToPlaylist } = require('../services/spotifyService');
+
+// One shot route to create the playlist from link
 
 router.post('/yt-to-spotify', async (req, res) => {
   const { playlistUrl, targetPlaylistId, playlistName } = req.body;
@@ -13,7 +17,7 @@ router.post('/yt-to-spotify', async (req, res) => {
   }
 
   if (!playlistUrl) {
-    return res.status(400).json({ error: 'playlistUrl is required' });
+    return res.status(400).json({ error: 'No Url present' });
   }
 
   try {

@@ -1,7 +1,7 @@
 console.log("Server started")
-require('dotenv').config(); // Load .env first
+require('dotenv').config();
 const express = require('express');
-const session = require('express-session'); // For storing user tokens
+const session = require('express-session');
 const spotifyRoutes = require('./routes/spotify');
 const convertRoutes = require('./routes/convert');
 const app = express();

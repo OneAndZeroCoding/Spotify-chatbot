@@ -45,7 +45,7 @@ async function getUserPlaylists(userAccessToken) {
       params: {
         limit,
         offset,
-        include_external: 'playlist' // include followed playlists
+        include_external: 'playlist'
       }
     });
 
