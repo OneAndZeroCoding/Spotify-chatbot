@@ -66,4 +66,15 @@ router.post("/refresh", async (req, res) => {
 });
 
 
+// Logout -> clears all tokens and memory
+router.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Logout error:", err);
+      return res.status(500).json({ error: "Failed to log out" });
+    }
+    res.json({ message: "Logged out successfully" });
+  });
+});
+
 module.exports = router;
