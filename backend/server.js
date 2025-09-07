@@ -4,6 +4,7 @@ const express = require('express');
 const session = require('express-session');
 const spotifyRoutes = require('./routes/spotify');
 const convertRoutes = require('./routes/convert');
+const authRoutes = require('./routes/auth');
 const app = express();
 app.use(express.json());
 
@@ -15,6 +16,7 @@ app.use(session({
 }));
 
 // Mount Spotify routes
+app.use('/auth', authRoutes);
 app.use('/spotify', spotifyRoutes);
 app.use('/convert', convertRoutes);
 
