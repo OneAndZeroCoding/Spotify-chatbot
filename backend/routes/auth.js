@@ -11,28 +11,34 @@ const {
 
 // 1. Login → redirect to Spotify authorization page
 router.get("/login", (req, res) => {
+  console.log("/login called");
   const authUrl = buildAuthURL();
+  console.log("User redirected to spotify")
   return res.redirect(authUrl);
 });
 
 
 // 2. Callback → Spotify redirects here with "code"
 router.get("/callback", async (req, res) => {
+  console.log("/callback called");
   const code = req.query.code;
   if (!code) {
+    console.log("Error : No code provided");
     return res.status(400).json({ error: "No code provided" });
   }
 
   try {
     // Exchange code for tokens
     const { access_token, refresh_token } = await exchangeCodeForTokens(code);
+    console.log("Access token and refresh token received.");
 
     // Fetch user profile with access_token
     const response = await axios.get("https://api.spotify.com/v1/me", {
       headers: { Authorization: `Bearer ${access_token}` },
     });
 
-    const user = response.data; 
+    const user = response.data;
+    console.log("User data received");
 
     // Redirect back to mobile app with tokens + user info
     const redirectUrl = `yt2spotify://auth?access=${encodeURIComponent(
@@ -40,7 +46,7 @@ router.get("/callback", async (req, res) => {
     )}&refresh=${encodeURIComponent(refresh_token)}&id=${encodeURIComponent(
       user.id
     )}&name=${encodeURIComponent(user.display_name || "")}`;
-
+    console.log("Redirected to mobile.");
     return res.redirect(redirectUrl);
   } catch (err) {
     console.error("Auth callback error:", err.response?.data || err.message);
